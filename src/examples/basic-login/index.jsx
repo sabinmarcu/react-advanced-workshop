@@ -1,1 +1,3 @@
-export default () => <h1>Login Stuffs</h1>;
+import { LoginForm } from './components/login';
+
+export default () => <LoginForm />;

@@ -12,6 +12,7 @@ export const patchedFetch = async (
     method,
     body,
     jwt,
+    ...rest
   } = {},
 ) => {
   const response = await fetch(
@@ -19,6 +20,7 @@ export const patchedFetch = async (
     {
       method: method || 'GET',
       body: JSON.stringify(body),
+      ...rest,
       headers: {
         'Content-Type': 'application/json',
         ...(jwt

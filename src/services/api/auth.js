@@ -58,11 +58,17 @@ export const authFetch = async (
   {
     method,
     body,
+    ...rest
   } = {},
 ) => {
   const fetcher = () => {
     const jwt = localStorage.getItem('auth:token');
-    return patchedFetch(url, { method, body, jwt });
+    return patchedFetch(url, {
+      method,
+      body,
+      jwt,
+      ...rest,
+    });
   };
   try {
     if (isRefreshing) {
