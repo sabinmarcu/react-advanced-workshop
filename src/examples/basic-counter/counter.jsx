@@ -1,14 +1,16 @@
 import {
-  useState,
   useCallback,
   useEffect,
   createContext,
   useContext,
   useDebugValue,
 } from 'react';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
+
+const useState = useLocalStorage.bind(null, 'basic-counter');
 
 export const useCounterProvider = (defaultValue = 0) => {
-  const [counter, setCounter] = useState(defaultValue);
+  const [counter, setCounter] = useState('counter', defaultValue);
   const increment = useCallback(
     (value) => setCounter((cnt) => cnt + value),
     [setCounter],

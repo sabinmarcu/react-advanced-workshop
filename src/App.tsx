@@ -9,6 +9,7 @@ import {
 import {
   BrowserRouter as Router,
   Route,
+  Switch,
 } from 'react-router-dom';
 import { RouterLink } from './components/RouterLink';
 
@@ -54,9 +55,11 @@ function App() {
         </Toolbar>
       </AppBar>
       <Container>
-        {Object.entries(routes).map(([path, component]) => (
-          <Route key={path} exact match={path} component={component} />
-        ))}
+        <Switch>
+          {Object.entries(routes).map(([path, component]) => (
+            <Route key={path} exact path={`/${path}`} component={component} />
+          ))}
+        </Switch>
       </Container>
     </Router>
   );
