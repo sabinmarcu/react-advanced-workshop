@@ -13,6 +13,9 @@ module.exports = {
     project: './tsconfig.json',
   },
   rules,
+  env: {
+    browser: true,
+  },
   overrides: [
     {
       files: ['.eslintrc.js'],
