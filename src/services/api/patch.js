@@ -1,4 +1,4 @@
-class ResponseError extends Error {
+export class ResponseError extends Error {
   constructor(message, statusCode) {
     super(message);
     this.message = message;
