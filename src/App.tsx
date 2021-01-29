@@ -54,9 +54,6 @@ function App() {
         </Toolbar>
       </AppBar>
       <Container>
-        <Route exact match="/">
-          <h1>Home Page!</h1>
-        </Route>
         {Object.entries(routes).map(([path, component]) => (
           <Route key={path} exact match={path} component={component} />
         ))}
