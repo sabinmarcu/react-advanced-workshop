@@ -16,7 +16,7 @@ const actions = [
 
 export const useFetch = (
   url,
-  fetchOpts,
+  fetchOpts = {},
 ) => {
   const [state, dispatch] = useReducer(
     (_, action) => {
@@ -69,8 +69,5 @@ export const useFetch = (
     }),
     [url, fetchOpts],
   );
-  return {
-    state,
-    fetch: fetchHandler,
-  };
+  return [state, fetchHandler];
 };

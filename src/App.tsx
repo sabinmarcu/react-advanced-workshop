@@ -57,7 +57,7 @@ function App() {
       <Container>
         <Switch>
           {Object.entries(routes).map(([path, component]) => (
-            <Route key={path} exact path={`/${path}`} component={component} />
+            <Route key={path} path={`/${path}`} component={component} />
           ))}
         </Switch>
       </Container>

@@ -150,7 +150,7 @@ export const handlers = [
     );
   }),
 
-  rest.post('/token', (req, res, ctx) => {
+  rest.post('/token', async (req, res, ctx) => {
     let token;
     try {
       token = getJWTFromHeader(req);
@@ -165,7 +165,7 @@ export const handlers = [
     }
 
     try {
-      jwt.verify(token, config.get('jwtSecret')!);
+      await jwt.verify(token, config.get('jwtSecret')!);
     } catch (e) {
       if (e instanceof TokenExpiredError) {
         const { refreshToken } = jwt.decode(token) as Record<string, any>;
@@ -203,7 +203,9 @@ export const handlers = [
       );
     }
 
-    return res(ctx.status(200), ctx.json('wut'));
+    return res(
+      ...wrapSuccess(ctx, token),
+    );
   }),
 
 ];

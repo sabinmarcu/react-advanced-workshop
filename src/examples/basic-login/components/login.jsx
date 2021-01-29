@@ -5,14 +5,13 @@ import {
   CardContent,
   CardHeader,
   TextField,
-  CircularProgress,
 } from '@material-ui/core';
-import { useCallback, useEffect } from 'react';
-import { useFetch } from '../hooks/useFetch';
 import { isEmail, useField, isRequired } from '../hooks/useField';
 import { useForm } from '../hooks/useForm';
 
-export const LoginForm = () => {
+export const LoginForm = ({
+  onSubmit: submitHandler,
+}) => {
   const {
     textField: emailField,
     formData: emailFormData,
@@ -32,35 +31,6 @@ export const LoginForm = () => {
     [
       isRequired,
     ],
-  );
-
-  const {
-    state: {
-      isLoading,
-      isLoaded,
-      data,
-    },
-    fetch,
-  } = useFetch(
-    '/echo',
-    {
-      method: 'POST',
-      mode: 'no-cors',
-    },
-  );
-
-  const submitHandler = useCallback(
-    (body) => fetch(body),
-    [fetch],
-  );
-
-  useEffect(
-    () => {
-      if (isLoaded && data) {
-        console.log('SUCCESS', data);
-      }
-    },
-    [isLoaded, data],
   );
 
   const {
@@ -104,7 +74,6 @@ export const LoginForm = () => {
         >
           Submit
         </Button>
-        {isLoading && <CircularProgress />}
       </CardActions>
     </Card>
   );

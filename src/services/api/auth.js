@@ -96,8 +96,19 @@ export const authFetch = async (
 
       return toResolve;
     }
+
+    throw e;
   }
-  return undefined;
+};
+
+export const verify = async () => {
+  try {
+    const { data: jwt } = await authFetch('/token', { method: 'POST' });
+    localStorage.setItem('auth:token', jwt);
+  } catch (e) {
+    localStorage.removeItem('auth:token');
+    throw e;
+  }
 };
 
 if (process.env.NODE_ENV === 'development') {
@@ -106,5 +117,6 @@ if (process.env.NODE_ENV === 'development') {
     fetch: authFetch,
     login,
     refresh,
+    verify,
   };
 }
