@@ -1,0 +1,10 @@
+!.eslintrc.js
+
+public
+
+*.spec.*
+
+reportWebVitals.ts
+service-worker.ts
+serviceWorkerRegistration.ts
+setupTests.ts
