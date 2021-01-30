@@ -15,11 +15,15 @@ export const patchedFetch = async (
     ...rest
   } = {},
 ) => {
+  const actualMethod = method || 'GET';
   const response = await fetch(
     url,
     {
-      method: method || 'GET',
-      body: JSON.stringify(body),
+      method: actualMethod,
+      ...(actualMethod.toUpperCase() === 'GET'
+        ? {}
+        : { body: JSON.stringify(body) }
+      ),
       ...rest,
       headers: {
         'Content-Type': 'application/json',

@@ -1,20 +1,26 @@
-import { useEffect } from 'react';
-import { Provider, useDispatch, useSelector } from 'react-redux';
-import { echoStore, store } from './redux/testStore';
+import { useMemo } from 'react';
+import { Provider, useSelector } from 'react-redux';
+import { todoIdsStore, store, todoStore } from './redux/testStore';
+
+const TodoItem = ({ id }) => {
+  const selector = useMemo(
+    () => todoStore.selectors.data(id),
+    [id],
+  );
+  const todo = useSelector(selector);
+  return (
+    todo ? <h1>{todo.text}</h1> : null
+  );
+};
 
 const ReduxComponent = () => {
-  const dispatch = useDispatch();
-  const ids = useSelector(echoStore.selectors.data);
-  useEffect(
-    () => {
-      dispatch(echoStore.actions.request());
-    },
-    [],
-  );
+  const ids = useSelector(todoIdsStore.selectors.data);
   return (
     <>
       <h1>Stuffs</h1>
-      <code>{JSON.stringify(ids)}</code>
+      {ids && ids.map((id) => (
+        <TodoItem key={id} id={id} />
+      ))}
     </>
   );
 };

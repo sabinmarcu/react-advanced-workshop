@@ -12,6 +12,18 @@ export const makeActionTypes = (
     {},
   );
 
+export const makeScopedActionTypes = (
+  actionTypes,
+  key,
+) => Object.entries(actionTypes)
+  .reduce(
+    (prev, [actionKey, action]) => ({
+      ...prev,
+      [actionKey]: makeKey(action, key),
+    }),
+    {},
+  );
+
 export const makeActions = (
   actionTypes,
 ) => Object.entries(actionTypes)
@@ -20,3 +32,14 @@ export const makeActions = (
     [key.toLowerCase()]: (payload) => ({ type: action, payload }),
   }),
   {});
+
+export const makeScopedActions = (actionTypes) => (
+  (key) => Object.entries(actionTypes)
+    .reduce((prev, [actionKey, action]) => ({
+      ...prev,
+      [actionKey.toLowerCase()]: (payload) => ({
+        type: makeKey(action, key),
+        payload,
+      }),
+    }),
+    {}));
