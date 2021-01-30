@@ -16,11 +16,13 @@ export const createCounter = () => {
     reducer,
     composeWithDevTools(),
   );
+
   const Provider = ({ children }) => (
     <ReduxProvider store={store} context={Context}>
       {children}
     </ReduxProvider>
   );
+
   const useDispatch = createDispatchHook(Context);
   const useSelector = createSelectorHook(Context);
 

@@ -59,6 +59,21 @@ export const useCounter = () => useContext(CounterContext);
 
 export const useCounterValue = () => useCounter().counter;
 
+export const useSelector = (selectorFunc) => selectorFunc(useCounter());
+export const useDispatch = () => {
+  const counter = useCounter();
+  const dispatch = useCallback(
+    ({ type, payload }) => {
+      if (['increment', 'decrement', 'reset'].includes(type)) {
+        return counter[type](payload);
+      }
+      throw new Error('unknown action');
+    },
+    [counter],
+  );
+  return dispatch;
+};
+
 export const useCounterIncrement = () => useCounter().increment;
 export const useCounterDecrement = () => useCounter().decrement;
 export const useCounterReset = () => useCounter().reset;
