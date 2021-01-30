@@ -4,7 +4,7 @@ import createSagaMiddleware from 'redux-saga';
 import { hook, reducer } from './analyticsStore';
 import { createEndpoint } from './createEndpoint';
 
-const echoStore = createEndpoint('echo', '/echo', { method: 'POST' });
+export const echoStore = createEndpoint('todoIds', '/todos');
 
 const sagaMiddleware = createSagaMiddleware();
 const endpointsReducer = combineReducers({

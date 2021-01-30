@@ -77,7 +77,7 @@ export const createEndpoint = (
           body: payload,
         },
       );
-      yield put(sagaActions.done(result));
+      yield put(sagaActions.done(result.data));
     } catch (error) {
       yield put(sagaActions.error(error));
     }
@@ -87,9 +87,14 @@ export const createEndpoint = (
     yield takeLatest(actionTypes.REQUEST, doFetch);
   }
 
+  const selectData = ({ endpoints: { todoIds: { data } } }) => data;
+
   return {
     reducer: { [name]: reducer },
     hook,
     actions,
+    selectors: {
+      data: selectData,
+    },
   };
 };
