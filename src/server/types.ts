@@ -15,4 +15,10 @@ export type CacheType<T> = {
   get: (key: string) => T | undefined
   set: (key: string, value: T) => void
   remove: (key: string) => void
+  keys: () => string[]
+};
+
+export type Todo = {
+  text: string,
+  done: boolean,
 };

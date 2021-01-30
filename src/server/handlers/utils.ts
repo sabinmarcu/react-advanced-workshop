@@ -72,11 +72,15 @@ export const makeCacheObject = <T>(prefix: string): CacheType<T> => {
       mergeKey(prefix, key),
     );
   };
+  const keys = () => Object.keys(localStorage)
+    .filter((it) => it.startsWith(prefix))
+    .map((it) => it.replace(`${prefix}:`, ''));
 
   return {
     get,
     set,
     remove,
+    keys,
   };
 };
 
