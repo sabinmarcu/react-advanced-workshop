@@ -1,5 +1,8 @@
-import { useCallback, useReducer } from 'react';
+import {
+  useCallback, useEffect, useReducer,
+} from 'react';
 import { fetch } from '../../../services/api';
+import { useForbiddenHandler } from '../store/forbiddenHandler';
 
 const actions = [
   'init',
@@ -18,6 +21,7 @@ export const useFetch = (
   url,
   fetchOpts = {},
 ) => {
+  const [forbiddenHandler] = useForbiddenHandler();
   const [state, dispatch] = useReducer(
     (_, action) => {
       const { type, payload } = action;
@@ -68,6 +72,17 @@ export const useFetch = (
       dispatch({ type: actions.pending });
     }),
     [url, fetchOpts],
+  );
+  useEffect(
+    () => {
+      if (state.error
+        && [403, 401].includes(state.error.statusCode)
+        && forbiddenHandler
+      ) {
+        forbiddenHandler();
+      }
+    },
+    [state.error, forbiddenHandler],
   );
   return [state, fetchHandler];
 };

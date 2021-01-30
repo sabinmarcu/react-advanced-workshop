@@ -3,12 +3,30 @@ import {
 } from 'react';
 import { login, verify } from '../../../services/api';
 import { useFetch } from '../hooks/useFetch';
+import { useForbiddenHandler } from './forbiddenHandler';
 
 export const useAuthStore = () => {
+  const [, setForbiddenHandler] = useForbiddenHandler();
   const [user, setUser] = useState();
   const [error, setError] = useState();
   const [userState, fetchUser] = useFetch(
     '/me',
+  );
+
+  const reset = useCallback(
+    () => {
+      setUser(undefined);
+      setError(undefined);
+    },
+    [setUser, setError],
+  );
+
+  useEffect(
+    () => {
+      console.log('Setting forbidden handler', { setForbiddenHandler, reset });
+      setForbiddenHandler(() => reset);
+    },
+    [setForbiddenHandler, reset],
   );
 
   const onLogin = useCallback(

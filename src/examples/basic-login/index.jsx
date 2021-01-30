@@ -2,6 +2,7 @@ import { Switch, Route, Link } from 'react-router-dom';
 import { LoginScreen } from './screens/login';
 import { PreviewScreen } from './screens/preview';
 import { AuthProvider } from './store/auth';
+import { ForbiddenHandlerProvider } from './store/forbiddenHandler';
 
 const Home = () => (
   <>
@@ -12,11 +13,13 @@ const Home = () => (
 );
 
 export default () => (
-  <AuthProvider>
-    <Switch>
-      <Route exact path="/basic-login/login" component={LoginScreen} />
-      <Route exact path="/basic-login/preview" component={PreviewScreen} />
-      <Route path="/basic-login" component={Home} />
-    </Switch>
-  </AuthProvider>
+  <ForbiddenHandlerProvider>
+    <AuthProvider>
+      <Switch>
+        <Route exact path="/basic-login/login" component={LoginScreen} />
+        <Route exact path="/basic-login/preview" component={PreviewScreen} />
+        <Route path="/basic-login" component={Home} />
+      </Switch>
+    </AuthProvider>
+  </ForbiddenHandlerProvider>
 );

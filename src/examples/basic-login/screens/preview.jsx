@@ -10,7 +10,7 @@ export const PreviewScreen = withAuth(
     }, fetch] = useFetch('/me');
     useEffect(
       () => {
-        fetch();
+        fetch().catch(() => { console.log('fail'); });
       },
       [],
     );
